@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean id="springTest" class="Projects.SpringFirstTest" />
+
+    <bean id="payment" class="Projects.Innerbeans.PaymentGateway">
+        <constructor-arg>
+            <bean class="Projects.Innerbeans.Order">
+                <property name="item" value="test"></property>
+                <property name="price" value="Rs 200"></property>
+                <property name="address" value="KTM"></property>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <context:property-placeholder location="classpath:db.properties" />
+
+    <bean id="dbConfig" class="Projects.Propertyfile.MyDbConfig">
+        <property name="dbHost" value="${db.host.url}"/>
+        <property name="dbPort" value="${db.port.number}"/>
+        <property name="dbService" value="${db.service.name}"/>
+        <property name="dbUrl" value="${db.user}"/>
+        <property name="dbPassword" value="${db.password}"/>
+    </bean>
+
+    <context:annotation-config />
+        <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"></bean>
+    <bean id="paymentGateway" class="Projects.Required.PaymentGateway"></bean>
+
+    <import resource="annotation.xml" />
+</beans>
